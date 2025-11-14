@@ -165,18 +165,57 @@
                     </div>
                 </main>
             </div>
-
-            <!-- Pestaña de Asistente -->
-            <div id="assistant-tab" class="hidden">
-                <header class="text-center mb-8">
-                    <h1 class="text-3xl font-bold text-slate-800">Asistente 🤖</h1>
-                    <p class="text-slate-500 mt-2">¿Necesitas ayuda? Pregúntale al asistente</p>
+            
+            <!-- Pestaña Aprender: contenido didáctico (artículos, vídeos, recursos) -->
+            <div id="learn-tab" class="hidden">
+                <header class="text-center mb-6 flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-slate-800">Aprender 🎓</h1>
+                        <p class="text-slate-500 mt-1">Lecturas, ejemplos y recursos para profundizar sin estructura de lección.</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button id="dark-mode-toggle" class="px-3 py-2 bg-slate-100 rounded-md text-sm">Modo oscuro</button>
+                    </div>
                 </header>
-                <main>
-                    <div id="assistant-container" class="bg-white p-6 rounded-2xl shadow-md" style="height: 500px; display: flex; flex-direction: column;">
-                        <!-- El widget de Chatling se cargará aquí -->
+
+                <main class="space-y-6">
+                    <div class="flex gap-3">
+                        <input id="learn-search" type="search" placeholder="Buscar artículos, temas o autores..."
+                            class="w-full p-3 rounded-2xl border-2 border-slate-200" />
+                        <button id="learn-clear" class="px-4 py-3 bg-teal-500 text-white rounded-2xl">Limpiar</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-6 rounded-2xl shadow-md">
+                            <h3 class="text-lg font-bold mb-3">Artículos Destacados</h3>
+                            <ul id="learn-list" class="space-y-4"></ul>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl shadow-md">
+                            <h3 class="text-lg font-bold mb-3">Glosario rápido</h3>
+                            <ul id="learn-glossary" class="space-y-2 text-slate-700 text-sm">
+                                <!-- glosario generado -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-md">
+                        <h3 class="text-lg font-bold mb-3">Mis marcadores</h3>
+                        <ul id="learn-bookmarks" class="space-y-3 text-slate-700"></ul>
                     </div>
                 </main>
+
+                <!-- Modal de lectura -->
+                <div id="article-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-30">
+                    <div class="bg-white max-w-3xl w-full p-6 rounded-2xl shadow-2xl relative">
+                        <button id="close-article" class="absolute top-4 right-4 text-slate-600">✖</button>
+                        <h2 id="article-title" class="text-2xl font-bold mb-3"></h2>
+                        <div id="article-body" class="prose max-h-[60vh] overflow-auto text-slate-700"></div>
+                        <div class="mt-4 flex justify-end">
+                            <button id="toggle-bookmark" class="px-4 py-2 bg-amber-400 text-white rounded-lg">Marcar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -254,12 +293,12 @@
                 </svg>
                 <span class="text-xs font-medium">Perfil</span>
             </button>
-            <button data-tab="assistant"
+            <button data-tab="learn"
                 class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                    <path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm4 1v8l4-2 4 2V6H6z" />
                 </svg>
-                <span class="text-xs font-medium">Asistente</span>
+                <span class="text-xs font-medium">Aprender</span>
             </button>
         </div>
     </nav>
@@ -305,6 +344,31 @@
             { name: "Ana G.", score: 510, avatar: '👩🏻' },
         ];
 
+        // Contenido para la pestaña Aprender
+        const learnContent = [
+            {
+                id: 'art-1',
+                title: 'Introducción al color: teoría y mezcla',
+                author: 'Curso ArteLingo',
+                excerpt: 'Conceptos básicos sobre color, temperatura, armonía y mezcla de pigmentos.',
+                body: '<p>El color es una de las herramientas esenciales de la expresión artística. Hablamos de temperatura, saturación, y modos de mezclar pigmentos en la pintura...</p>'
+            },
+            {
+                id: 'art-2',
+                title: 'Cómo leer una partitura: guía rápida',
+                author: 'Equipo Música',
+                excerpt: 'Conceptos esenciales para comenzar a leer ritmos y notas en partituras sencillas.',
+                body: '<p>Leer partituras se hace más fácil si aprendes las posiciones de las notas y los valores rítmicos...</p>'
+            },
+            {
+                id: 'art-3',
+                title: 'Breve historia del Renacimiento',
+                author: 'Historia del Arte',
+                excerpt: 'Un repaso por los principales hitos y artistas del Renacimiento europeo.',
+                body: '<p>El Renacimiento fue un periodo marcado por el redescubrimiento de las formas clásicas y el humanismo...</p>'
+            }
+        ];
+
         // --- ESTADO DE LA APP ---
         let currentQuestionIndex = 0;
         let score = 0;
@@ -324,7 +388,8 @@
         const tabScreens = {
             lessons: document.getElementById('lessons-tab'),
             profile: document.getElementById('profile-tab'),
-            assistant: document.getElementById('assistant-tab')
+            assistant: document.getElementById('assistant-tab'),
+            learn: document.getElementById('learn-tab')
         };
 
         const navButtons = document.querySelectorAll('.nav-button');
@@ -362,6 +427,8 @@
             if (tabId === 'profile') {
                 updateProfileUI();
             }
+
+            showChat(); // Mostrar el chat al volver a las pestañas principales
         } function updateProfileUI() {
             profileName.textContent = userProfile.name;
             profileLevel.textContent = `Nivel ${userProfile.level}`;
@@ -505,6 +572,7 @@
             completionScreen.classList.add('hidden');
             mainContent.classList.add('hidden');
             lessonScreen.classList.remove('hidden');
+            hideChat(); // Ocultar el chat al iniciar lección
             loadQuestion();
         }
 
@@ -526,39 +594,215 @@
         document.getElementById('home-button').addEventListener('click', () => showTab('lessons'));
 
 
+        // --- FUNCIONES PARA LA PESTAÑA APRENDER ---
+        function renderLearnContent(filter = '') {
+            const list = document.getElementById('learn-list');
+            list.innerHTML = '';
+            const normalized = filter.trim().toLowerCase();
+            const items = learnContent.filter(a => {
+                if (!normalized) return true;
+                return (a.title + ' ' + a.excerpt + ' ' + a.author).toLowerCase().includes(normalized);
+            });
+
+            items.forEach(article => {
+                const li = document.createElement('li');
+                li.className = 'border-b pb-3';
+                li.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-semibold text-slate-800">${article.title}</h4>
+                            <p class="text-slate-500 text-sm">${article.author} — ${article.excerpt}</p>
+                        </div>
+                        <div class="ml-3 flex flex-col items-end space-y-2">
+                            <button data-id="${article.id}" class="open-article px-3 py-1 bg-teal-500 text-white rounded-xl text-sm">Leer</button>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+
+            // Attach handlers
+            Array.from(document.querySelectorAll('.open-article')).forEach(btn => {
+                btn.onclick = (e) => openArticle(e.target.dataset.id);
+            });
+        }
+
+        function renderGlossary() {
+            const glossary = {
+                'Tríada': 'Acorde de tres notas: tónica, tercera y quinta.',
+                'Fermata': 'Símbolo que indica sostener la nota más tiempo de lo escrito.',
+                'Claroscuro': 'Técnica que contrasta luces y sombras para modelar formas.'
+            };
+            const el = document.getElementById('learn-glossary');
+            el.innerHTML = '';
+            Object.entries(glossary).forEach(([term, def]) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${term}:</strong> ${def}`;
+                el.appendChild(li);
+            });
+        }
+
+        function loadBookmarks() {
+            const raw = localStorage.getItem('artelingo_bookmarks');
+            try {
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveBookmarks(list) {
+            localStorage.setItem('artelingo_bookmarks', JSON.stringify(list));
+            renderBookmarks();
+        }
+
+        function renderBookmarks() {
+            const container = document.getElementById('learn-bookmarks');
+            container.innerHTML = '';
+            const bookmarks = loadBookmarks();
+            if (!bookmarks.length) {
+                container.innerHTML = '<p class="text-slate-500">No tienes marcadores aún.</p>';
+                return;
+            }
+            bookmarks.forEach(id => {
+                const art = learnContent.find(a => a.id === id);
+                if (!art) return;
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center';
+                li.innerHTML = `
+                    <div>
+                        <strong>${art.title}</strong>
+                        <div class="text-sm text-slate-500">${art.author}</div>
+                    </div>
+                    <div class="ml-4">
+                        <button data-id="${art.id}" class="open-article px-3 py-1 bg-teal-500 text-white rounded-xl text-sm">Abrir</button>
+                        <button data-id="${art.id}" class="remove-bookmark ml-2 px-3 py-1 bg-slate-200 rounded-xl text-sm">X</button>
+                    </div>
+                `;
+                container.appendChild(li);
+            });
+
+            Array.from(document.querySelectorAll('.open-article')).forEach(btn => {
+                btn.onclick = (e) => openArticle(e.target.dataset.id);
+            });
+            Array.from(document.querySelectorAll('.remove-bookmark')).forEach(btn => {
+                btn.onclick = (e) => {
+                    const id = e.target.dataset.id;
+                    const list = loadBookmarks().filter(i => i !== id);
+                    saveBookmarks(list);
+                };
+            });
+        }
+
+        function openArticle(id) {
+            const art = learnContent.find(a => a.id === id);
+            if (!art) return;
+            document.getElementById('article-title').textContent = art.title;
+            document.getElementById('article-body').innerHTML = art.body;
+            document.getElementById('article-modal').classList.remove('hidden');
+            // update bookmark button text
+            const bookmarks = loadBookmarks();
+            document.getElementById('toggle-bookmark').dataset.id = id;
+            document.getElementById('toggle-bookmark').textContent = bookmarks.includes(id) ? 'Quitar marcador' : 'Marcar';
+        }
+
+        function closeArticle() {
+            document.getElementById('article-modal').classList.add('hidden');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('toggle-bookmark');
+            const id = btn.dataset.id;
+            if (!id) return;
+            let list = loadBookmarks();
+            if (list.includes(id)) {
+                list = list.filter(i => i !== id);
+            } else {
+                list.push(id);
+            }
+            saveBookmarks(list);
+            btn.textContent = list.includes(id) ? 'Quitar marcador' : 'Marcar';
+        }
+
+        // wire learn search, modal and dark mode
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'close-article') closeArticle();
+            if (e.target && e.target.id === 'toggle-bookmark') toggleBookmark();
+        });
+        document.getElementById('learn-search')?.addEventListener('input', (e) => renderLearnContent(e.target.value));
+        document.getElementById('learn-clear')?.addEventListener('click', () => { document.getElementById('learn-search').value = ''; renderLearnContent(); });
+        document.getElementById('dark-mode-toggle')?.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            document.body.classList.toggle('bg-slate-900');
+        });
+
+        // Inicializar contenido de Aprender
+        renderLearnContent();
+        renderGlossary();
+        renderBookmarks();
+
         // --- FUNCIONES DEL WIDGET DE CHAT ---
-        // Estas funciones se mantienen por compatibilidad, pero ahora el widget
-        // es solo una iframe integrada en la pestaña de Asistente
+        function findChatElements() {
+            return {
+                frame: document.querySelector('iframe[id^="chtl-iframe-"]'),
+                button: document.querySelector('button[id^="chtl-launcher-"]'),
+                container: document.querySelector('div[id^="chtl-launcher-container-"]')
+            };
+        }
 
         function hideChat() {
-            // El chat está integrado solo en la pestaña de Asistente,
-            // así que no hay nada que ocultar cuando estamos en otras pestañas
+            // Intentamos varias veces ya que el widget puede tardar en cargar
+            let attempts = 0;
+            const maxAttempts = 10;
+
+            function attemptHide() {
+                const elements = findChatElements();
+                if (elements.frame || elements.button || elements.container) {
+                    if (elements.frame) elements.frame.style.display = 'none';
+                    if (elements.button) elements.button.style.display = 'none';
+                    if (elements.container) elements.container.style.display = 'none';
+                    // También añadimos CSS para asegurar que se oculte
+                    const style = document.createElement('style');
+                    style.id = 'chat-hide-style';
+                    style.textContent = `
+                        iframe[id^="chtl-iframe-"],
+                        button[id^="chtl-launcher-"],
+                        div[id^="chtl-launcher-container-"] {
+                            display: none !important;
+                            opacity: 0 !important;
+                            visibility: hidden !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    setTimeout(attemptHide, 500); // Intentar de nuevo en 500ms
+                }
+            }
+
+            attemptHide();
         }
 
         function showChat() {
-            // El chat está integrado solo en la pestaña de Asistente,
-            // así que se mostrará automáticamente cuando accedas a esa pestaña
+            const elements = findChatElements();
+            if (elements.frame) elements.frame.style.display = '';
+            if (elements.button) elements.button.style.display = '';
+            if (elements.container) elements.container.style.display = '';
+            // Removemos el CSS que fuerza el ocultamiento
+            const style = document.getElementById('chat-hide-style');
+            if (style) style.remove();
         }
 
         // --- INICIALIZACIÓN ---
         showTab('lessons');
         renderFriendsList();
-        
-        // Cargar el widget de Chatling cuando la página esté lista
-        window.addEventListener('load', () => {
-            const assistantContainer = document.getElementById('assistant-container');
-            if (assistantContainer && !assistantContainer.querySelector('iframe')) {
-                const iframe = document.createElement('iframe');
-                iframe.src = 'https://chatling.ai/chatbot/4484352243?embedded=true';
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.border = 'none';
-                iframe.style.borderRadius = '8px';
-                assistantContainer.appendChild(iframe);
-            }
-        });
 
     </script>
+
+    <!-- Widget de Chat Chatling.ai -->
+    <script> window.chtlConfig = { chatbotId: "4484352243" } </script>
+    <script async data-id="4484352243" id="chtl-script" type="text/javascript"
+        src="https://chatling.ai/js/embed.js"></script>
 </body>
 
 </html>
