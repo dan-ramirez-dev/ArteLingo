@@ -165,6 +165,19 @@
                     </div>
                 </main>
             </div>
+
+            <!-- Pestaña de Asistente -->
+            <div id="assistant-tab" class="hidden">
+                <header class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-slate-800">Asistente 🤖</h1>
+                    <p class="text-slate-500 mt-2">¿Necesitas ayuda? Pregúntale al asistente</p>
+                </header>
+                <main>
+                    <div id="assistant-container" class="bg-white p-6 rounded-2xl shadow-md" style="height: 500px; display: flex; flex-direction: column;">
+                        <!-- El widget de Chatling se cargará aquí -->
+                    </div>
+                </main>
+            </div>
         </div>
 
         <!-- Pantalla de Lección -->
@@ -241,6 +254,13 @@
                 </svg>
                 <span class="text-xs font-medium">Perfil</span>
             </button>
+            <button data-tab="assistant"
+                class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                </svg>
+                <span class="text-xs font-medium">Asistente</span>
+            </button>
         </div>
     </nav>
 
@@ -264,18 +284,18 @@
 
         const musicalTheoryLessonData = [
             { question: "¿Qué acorde se muestra en la imagen?", imageUrl: "https://cresciente.net/wp-content/uploads/2021/11/Do-mayor.png.webp", options: ["Do mayor", "La menor", "Sol mayor", "Fa mayor"], correctAnswer: "Do mayor", explanation: "Este es el acorde de Do mayor (C), formado por las notas Do, Mi y Sol. Es uno de los acordes más básicos y fundamentales en la música." },
-            { question: "¿Qué tipo de acorde es este?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/chord-am.png", options: ["Mayor", "Menor", "Disminuido", "Aumentado"], correctAnswer: "Menor", explanation: "Este es un acorde menor, caracterizado por tener una tercera menor (3 semitonos) entre la fundamental y la tercera del acorde, lo que le da su sonido característico más 'oscuro' o 'triste'." },
-            { question: "¿Qué progresión armónica se muestra?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/progression-1.png", options: ["I-IV-V", "ii-V-I", "I-vi-IV-V", "IV-V-vi"], correctAnswer: "I-IV-V", explanation: "Esta es la progresión I-IV-V, una de las más comunes en música popular. En Do mayor sería C-F-G, una base para muchas canciones." },
-            { question: "¿Qué función armónica cumple este acorde en Do mayor?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/dominant-g.png", options: ["Tónica", "Subdominante", "Dominante", "Mediante"], correctAnswer: "Dominante", explanation: "Este es el acorde de Sol (G), que en la tonalidad de Do mayor cumple la función de dominante (V grado), creando tensión que busca resolver a la tónica." },
-            { question: "¿Qué tipo de cadencia es esta?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/cadence-perfect.png", options: ["Perfecta", "Plagal", "Rota", "Semi-cadencia"], correctAnswer: "Perfecta", explanation: "Esta es una cadencia perfecta (V-I), la más conclusiva de todas las cadencias, típicamente usada para finalizar una pieza o sección musical." }
+            { question: "¿Qué tipo de acorde es este?", imageUrl: "https://www.skoove.com/blog/wp-content/uploads/2021/08/6mm-300x189.png", options: ["Mayor", "Menor", "Disminuido", "Aumentado"], correctAnswer: "Menor", explanation: "Este es un acorde menor, caracterizado por tener una tercera menor (3 semitonos) entre la fundamental y la tercera del acorde, lo que le da su sonido característico más 'oscuro' o 'triste'." },
+            { question: "¿Qué progresión armónica se muestra?", imageUrl: "https://lh3.googleusercontent.com/jSnfUL-sCkRk234ztagEjxBj9z08A7LK_06EE4d5WXyfRtbpkrzBCWwZqcuQGOHFpvS0ly6Q50s3rXseHjBAaUg5QUWWTFEuV4YrXG_qVncLp65m_hE0WRj08gs6oCgjHbubBsC3r2WFXZRXyYw3zvg", options: ["I-IV-V", "ii-V-I", "I-vi-IV-V", "IV-V-vi"], correctAnswer: "I-IV-V", explanation: "Esta es la progresión I-IV-V, una de las más comunes en música popular. En Do mayor sería C-F-G, una base para muchas canciones." },
+            { question: "¿Qué función armónica cumple este acorde en Do mayor?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/ArteLingo/refs/heads/main/acorde%20sol.png", options: ["Tónica", "Subdominante", "Dominante", "Mediante"], correctAnswer: "Dominante", explanation: "Este es el acorde de Sol (G), que en la tonalidad de Do mayor cumple la función de dominante (V grado), creando tensión que busca resolver a la tónica." },
+            { question: "¿Cuántas notas tiene una tríada básica (acorde simple)?", imageUrl: "https://cresciente.net/wp-content/uploads/2021/11/Do-mayor.png.webp", options: ["2", "3", "4", "5"], correctAnswer: "3", explanation: "Una tríada está formada por tres notas: la fundamental, la tercera y la quinta. Es la forma más básica de acorde." }
         ];
 
         const solfeoLessonData = [
-            { question: "¿Qué nota musical representa esta figura en clave de sol?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/note-c4.png", options: ["La", "Si", "Do central", "Re"], correctAnswer: "Do central", explanation: "Esta nota en la primera línea adicional inferior de la clave de sol representa el Do central (C4), una nota fundamental en la música." },
-            { question: "¿Qué tipo de compás muestra esta partitura?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/time-44.png", options: ["2/4", "3/4", "4/4", "6/8"], correctAnswer: "4/4", explanation: "Este es el compás de 4/4, también llamado 'compás común'. Significa que hay 4 tiempos por compás y que la negra vale un tiempo." },
-            { question: "¿Qué figura musical es esta?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/note-quarter.png", options: ["Redonda", "Blanca", "Negra", "Corchea"], correctAnswer: "Negra", explanation: "Esta es una negra, que en un compás de 4/4 vale un tiempo. Es una de las figuras más comunes en la música." },
-            { question: "¿Qué indica este símbolo musical?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/fermata.png", options: ["Calderón/Fermata", "Staccato", "Acento", "Tenuto"], correctAnswer: "Calderón/Fermata", explanation: "Este símbolo es un calderón o fermata, que indica que la nota debe sostenerse más tiempo del indicado, a discreción del intérprete." },
-            { question: "¿En qué línea se escribe la nota Fa en clave de sol?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/note-f5.png", options: ["Primera línea", "Segunda línea", "Tercera línea", "Quinta línea"], correctAnswer: "Quinta línea", explanation: "En clave de sol, la nota Fa se escribe en la quinta (última) línea del pentagrama." }
+            { question: "¿Qué nota musical representa esta figura en clave de sol?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/ArteLingo/refs/heads/main/Do%20central.png", options: ["La", "Si", "Do central", "Re"], correctAnswer: "Do central", explanation: "Esta nota en la primera línea adicional inferior de la clave de sol representa el Do central (C4), una nota fundamental en la música." },
+            { question: "¿Qué tipo de compás muestra esta partitura?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/ArteLingo/refs/heads/main/weezer%204%20cuartos.png", options: ["2/4", "3/4", "4/4", "6/8"], correctAnswer: "4/4", explanation: "Este es el compás de 4/4, también llamado 'compás común'. Significa que hay 4 tiempos por compás y que la negra vale un tiempo." },
+            { question: "¿Qué figura musical es esta?", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCQVnN-bly4n5JAI-OszHIf_zbDatDzVtqEEj5-xMGpRu8fObIxelj3BhJOB1lUJTeDrM", options: ["Redonda", "Blanca", "Negra", "Corchea"], correctAnswer: "Negra", explanation: "Esta es una negra, que en un compás de 4/4 vale un tiempo. Es una de las figuras más comunes en la música." },
+            { question: "¿Qué indica este símbolo musical?", imageUrl: "https://mcarmenfer.wordpress.com/wp-content/uploads/2010/11/calderc3b3n.gif", options: ["Calderón/Fermata", "Staccato", "Acento", "Tenuto"], correctAnswer: "Calderón/Fermata", explanation: "Este símbolo es un calderón o fermata, que indica que la nota debe sostenerse más tiempo del indicado, a discreción del intérprete." },
+            { question: "¿En qué línea se puede escribir la nota Fa en clave de sol?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/ArteLingo/refs/heads/main/clave%20sol.png", options: ["Primera línea", "Segunda línea", "Tercera línea", "Quinta línea"], correctAnswer: "Quinta línea", explanation: "En clave de sol, la nota Fa se escribe en la quinta (última) línea del pentagrama." }
         ];
 
         const friendsData = [
@@ -303,7 +323,8 @@
 
         const tabScreens = {
             lessons: document.getElementById('lessons-tab'),
-            profile: document.getElementById('profile-tab')
+            profile: document.getElementById('profile-tab'),
+            assistant: document.getElementById('assistant-tab')
         };
 
         const navButtons = document.querySelectorAll('.nav-button');
@@ -342,7 +363,13 @@
                 updateProfileUI();
             }
 
-            showChat(); // Mostrar el chat al volver a las pestañas principales
+            // Mostrar el chat solo si no estamos en la pestaña de asistente
+            // (la pestaña de asistente tiene su propio widget integrado)
+            if (tabId !== 'assistant') {
+                showChat();
+            } else {
+                hideChat();
+            }
         } function updateProfileUI() {
             profileName.textContent = userProfile.name;
             profileLevel.textContent = `Nivel ${userProfile.level}`;
@@ -567,7 +594,12 @@
     </script>
 
     <!-- Widget de Chat Chatling.ai -->
-    <script> window.chtlConfig = { chatbotId: "4484352243" } </script>
+    <script>
+        window.chtlConfig = { 
+            chatbotId: "4484352243",
+            containerSelector: "#assistant-container"
+        };
+    </script>
     <script async data-id="4484352243" id="chtl-script" type="text/javascript"
         src="https://chatling.ai/js/embed.js"></script>
 </body>
