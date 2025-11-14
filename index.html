@@ -111,22 +111,20 @@
                     <div>
                         <h2 class="text-2xl font-bold text-slate-800 mb-4">Música</h2>
                         <div class="space-y-4">
-                            <div
-                                class="lesson-card bg-white p-6 rounded-2xl shadow-md flex items-center space-x-4 disabled">
+                            <div id="start-music-theory-lesson-card"
+                                class="lesson-card bg-white p-6 rounded-2xl shadow-md cursor-pointer flex items-center space-x-4">
                                 <div class="text-4xl">🎵</div>
                                 <div>
                                     <h3 class="font-bold text-lg text-slate-800">Teoría Musical Básica</h3>
-                                    <p class="text-slate-600">Aprende sobre notas y escalas. <span
-                                            class="text-teal-500 font-semibold text-sm">(Próximamente)</span></p>
+                                    <p class="text-slate-600">Aprende sobre notas, escalas y símbolos musicales.</p>
                                 </div>
                             </div>
-                            <div
-                                class="lesson-card bg-white p-6 rounded-2xl shadow-md flex items-center space-x-4 disabled">
+                            <div id="start-solfeo-lesson-card"
+                                class="lesson-card bg-white p-6 rounded-2xl shadow-md cursor-pointer flex items-center space-x-4">
                                 <div class="text-4xl">🎼</div>
                                 <div>
                                     <h3 class="font-bold text-lg text-slate-800">Solfeo para Principiantes</h3>
-                                    <p class="text-slate-600">Entrena tu oído y lectura musical. <span
-                                            class="text-teal-500 font-semibold text-sm">(Próximamente)</span></p>
+                                    <p class="text-slate-600">Aprende a leer partituras y símbolos musicales.</p>
                                 </div>
                             </div>
                         </div>
@@ -264,6 +262,22 @@
             { question: "El uso dramático de la luz y la sombra (claroscuro) y la compleja composición de 'Las Meninas' son característicos del período...", imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_in_Google_Earth.jpg/1280px-Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_in_Google_Earth.jpg", options: ["Rococó", "Neoclasicismo", "Barroco", "Renacimiento"], correctAnswer: "Barroco", explanation: "'Las Meninas' de Diego Velázquez es una obra cumbre del Barroco español, famosa por su compleja estructura compositiva y su magistral uso de la luz." },
         ];
 
+        const musicalTheoryLessonData = [
+            { question: "¿Qué acorde se muestra en la imagen?", imageUrl: "https://cresciente.net/wp-content/uploads/2021/11/Do-mayor.png.webp", options: ["Do mayor", "La menor", "Sol mayor", "Fa mayor"], correctAnswer: "Do mayor", explanation: "Este es el acorde de Do mayor (C), formado por las notas Do, Mi y Sol. Es uno de los acordes más básicos y fundamentales en la música." },
+            { question: "¿Qué tipo de acorde es este?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/chord-am.png", options: ["Mayor", "Menor", "Disminuido", "Aumentado"], correctAnswer: "Menor", explanation: "Este es un acorde menor, caracterizado por tener una tercera menor (3 semitonos) entre la fundamental y la tercera del acorde, lo que le da su sonido característico más 'oscuro' o 'triste'." },
+            { question: "¿Qué progresión armónica se muestra?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/progression-1.png", options: ["I-IV-V", "ii-V-I", "I-vi-IV-V", "IV-V-vi"], correctAnswer: "I-IV-V", explanation: "Esta es la progresión I-IV-V, una de las más comunes en música popular. En Do mayor sería C-F-G, una base para muchas canciones." },
+            { question: "¿Qué función armónica cumple este acorde en Do mayor?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/dominant-g.png", options: ["Tónica", "Subdominante", "Dominante", "Mediante"], correctAnswer: "Dominante", explanation: "Este es el acorde de Sol (G), que en la tonalidad de Do mayor cumple la función de dominante (V grado), creando tensión que busca resolver a la tónica." },
+            { question: "¿Qué tipo de cadencia es esta?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/cadence-perfect.png", options: ["Perfecta", "Plagal", "Rota", "Semi-cadencia"], correctAnswer: "Perfecta", explanation: "Esta es una cadencia perfecta (V-I), la más conclusiva de todas las cadencias, típicamente usada para finalizar una pieza o sección musical." }
+        ];
+
+        const solfeoLessonData = [
+            { question: "¿Qué nota musical representa esta figura en clave de sol?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/note-c4.png", options: ["La", "Si", "Do central", "Re"], correctAnswer: "Do central", explanation: "Esta nota en la primera línea adicional inferior de la clave de sol representa el Do central (C4), una nota fundamental en la música." },
+            { question: "¿Qué tipo de compás muestra esta partitura?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/time-44.png", options: ["2/4", "3/4", "4/4", "6/8"], correctAnswer: "4/4", explanation: "Este es el compás de 4/4, también llamado 'compás común'. Significa que hay 4 tiempos por compás y que la negra vale un tiempo." },
+            { question: "¿Qué figura musical es esta?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/note-quarter.png", options: ["Redonda", "Blanca", "Negra", "Corchea"], correctAnswer: "Negra", explanation: "Esta es una negra, que en un compás de 4/4 vale un tiempo. Es una de las figuras más comunes en la música." },
+            { question: "¿Qué indica este símbolo musical?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/fermata.png", options: ["Calderón/Fermata", "Staccato", "Acento", "Tenuto"], correctAnswer: "Calderón/Fermata", explanation: "Este símbolo es un calderón o fermata, que indica que la nota debe sostenerse más tiempo del indicado, a discreción del intérprete." },
+            { question: "¿En qué línea se escribe la nota Fa en clave de sol?", imageUrl: "https://raw.githubusercontent.com/dan-ramirez-dev/artelingo-assets/main/music/note-f5.png", options: ["Primera línea", "Segunda línea", "Tercera línea", "Quinta línea"], correctAnswer: "Quinta línea", explanation: "En clave de sol, la nota Fa se escribe en la quinta (última) línea del pentagrama." }
+        ];
+
         const friendsData = [
             { name: "Miguel C.", score: 1250, avatar: '🧑🏻' },
             { name: "Sofía R.", score: 980, avatar: '👩🏼' },
@@ -327,9 +341,9 @@
             if (tabId === 'profile') {
                 updateProfileUI();
             }
-        }
 
-        function updateProfileUI() {
+            showChat(); // Mostrar el chat al volver a las pestañas principales
+        } function updateProfileUI() {
             profileName.textContent = userProfile.name;
             profileLevel.textContent = `Nivel ${userProfile.level}`;
             const progressPercentage = (userProfile.xp / userProfile.xpToNextLevel) * 100;
@@ -472,6 +486,7 @@
             completionScreen.classList.add('hidden');
             mainContent.classList.add('hidden');
             lessonScreen.classList.remove('hidden');
+            hideChat(); // Ocultar el chat al iniciar lección
             loadQuestion();
         }
 
@@ -484,12 +499,66 @@
 
         startFundamentalsLessonCard.addEventListener('click', () => startLesson(fundamentalsLessonData));
         startMovementsLessonCard.addEventListener('click', () => startLesson(artMovementsLessonData));
+        document.getElementById('start-music-theory-lesson-card').addEventListener('click', () => startLesson(musicalTheoryLessonData));
+        document.getElementById('start-solfeo-lesson-card').addEventListener('click', () => startLesson(solfeoLessonData));
 
         document.getElementById('restart-button').addEventListener('click', () => startLesson(activeLessonData));
         document.getElementById('next-button').addEventListener('click', () => nextQuestion());
         document.getElementById('back-to-home-button').addEventListener('click', () => showTab('lessons'));
         document.getElementById('home-button').addEventListener('click', () => showTab('lessons'));
 
+
+        // --- FUNCIONES DEL WIDGET DE CHAT ---
+        function findChatElements() {
+            return {
+                frame: document.querySelector('iframe[id^="chtl-iframe-"]'),
+                button: document.querySelector('button[id^="chtl-launcher-"]'),
+                container: document.querySelector('div[id^="chtl-launcher-container-"]')
+            };
+        }
+
+        function hideChat() {
+            // Intentamos varias veces ya que el widget puede tardar en cargar
+            let attempts = 0;
+            const maxAttempts = 10;
+
+            function attemptHide() {
+                const elements = findChatElements();
+                if (elements.frame || elements.button || elements.container) {
+                    if (elements.frame) elements.frame.style.display = 'none';
+                    if (elements.button) elements.button.style.display = 'none';
+                    if (elements.container) elements.container.style.display = 'none';
+                    // También añadimos CSS para asegurar que se oculte
+                    const style = document.createElement('style');
+                    style.id = 'chat-hide-style';
+                    style.textContent = `
+                        iframe[id^="chtl-iframe-"],
+                        button[id^="chtl-launcher-"],
+                        div[id^="chtl-launcher-container-"] {
+                            display: none !important;
+                            opacity: 0 !important;
+                            visibility: hidden !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    setTimeout(attemptHide, 500); // Intentar de nuevo en 500ms
+                }
+            }
+
+            attemptHide();
+        }
+
+        function showChat() {
+            const elements = findChatElements();
+            if (elements.frame) elements.frame.style.display = '';
+            if (elements.button) elements.button.style.display = '';
+            if (elements.container) elements.container.style.display = '';
+            // Removemos el CSS que fuerza el ocultamiento
+            const style = document.getElementById('chat-hide-style');
+            if (style) style.remove();
+        }
 
         // --- INICIALIZACIÓN ---
         showTab('lessons');
