@@ -360,6 +360,24 @@
                 </main>
             </div>
 
+            <!-- Pestaña Asistente -->
+            <div id="assistant-tab" class="hidden">
+                <header class="text-center mb-6">
+                    <h1 class="text-3xl font-bold text-slate-800">Asistente</h1>
+                    <p class="text-slate-500 mt-1">Usa el asistente para preguntar sobre lecciones, recursos o pedir ayuda.</p>
+                </header>
+                <main class="space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-md text-slate-700">
+                        <p class="mb-4">Pulsa el botón para abrir el asistente en pantalla completa. Si el widget tarda en cargar, espera unos segundos.</p>
+                        <div class="space-y-2">
+                            <button id="open-assistant-button" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-2xl">Abrir asistente</button>
+                            <button id="close-assistant-hide" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium py-2 px-4 rounded-2xl">Ocultar widget</button>
+                        </div>
+                        <p id="assistant-status" class="text-sm text-slate-500 mt-3"></p>
+                    </div>
+                </main>
+            </div>
+
             <!-- Pestaña de Perfil -->
             <div id="profile-tab" class="hidden">
                 <header class="text-center mb-8">
@@ -473,6 +491,13 @@
                 </svg>
                 <span class="text-xs font-medium">Aprender</span>
             </button>
+            <button data-tab="assistant"
+                class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors" aria-label="Asistente">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="text-xs font-medium">Asistente</span>
+            </button>
             <button data-tab="profile"
                 class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -544,6 +569,7 @@
         const tabScreens = {
             lessons: document.getElementById('lessons-tab'),
             learn: document.getElementById('learn-tab'),
+            assistant: document.getElementById('assistant-tab'),
             profile: document.getElementById('profile-tab')
         };
 
@@ -583,7 +609,13 @@
                 updateProfileUI();
             }
 
-            showChat(); // Mostrar el chat al volver a las pestañas principales
+            // Mostrar/ocultar el widget solo en la pestaña 'assistant'
+            if (tabId === 'assistant') {
+                showChat();
+            } else {
+                // Aseguramos que el widget no esté visible en otras pestañas
+                hideChat();
+            }
         } function updateProfileUI() {
             profileName.textContent = userProfile.name;
             profileLevel.textContent = `Nivel ${userProfile.level}`;
@@ -614,6 +646,42 @@
             sections.forEach(s => s.classList.add('hidden'));
             const el = document.getElementById(`learn-${sectionId}`) || document.getElementById(`learn-${sectionId}`);
             if (el) el.classList.remove('hidden');
+        }
+
+        // Abrir el launcher del widget (si existe) o mostrar el chat
+        function openAssistantLauncher() {
+            const status = document.getElementById('assistant-status');
+            const tryOpen = () => {
+                const launcher = document.querySelector('button[id^="chtl-launcher-"]');
+                if (launcher) {
+                    launcher.click();
+                    if (status) status.textContent = 'Asistente abierto.';
+                    return true;
+                }
+                return false;
+            };
+
+            // Intentar abrir inmediatamente
+            if (tryOpen()) return;
+
+            // Si no está disponible aún, mostrar el chat (quita la regla que lo oculta) y reintentar
+            showChat();
+            if (status) status.textContent = 'Cargando asistente...';
+            let attempts = 0;
+            const maxAttempts = 10;
+            const interval = setInterval(() => {
+                attempts++;
+                if (tryOpen() || attempts >= maxAttempts) {
+                    clearInterval(interval);
+                    if (attempts >= maxAttempts && status) status.textContent = 'No se pudo abrir el asistente automáticamente.';
+                }
+            }, 500);
+        }
+
+        function hideAssistantWidget() {
+            hideChat();
+            const status = document.getElementById('assistant-status');
+            if (status) status.textContent = 'Widget oculto.';
         }
 
         function renderFriendsList() {
@@ -830,12 +898,21 @@
         showTab('lessons');
         renderFriendsList();
 
+        // --- EVENTOS PESTAÑA ASISTENTE ---
+        document.getElementById('open-assistant-button').addEventListener('click', () => {
+            // Aseguramos mostrar la pestaña antes de intentar abrir
+            showTab('assistant');
+            setTimeout(openAssistantLauncher, 300);
+        });
+        document.getElementById('close-assistant-hide').addEventListener('click', () => {
+            hideAssistantWidget();
+        });
+
     </script>
 
-    <!-- Widget de Chat Chatling.ai -->
-    <script> window.chtlConfig = { chatbotId: "4484352243" } </script>
-    <script async data-id="4484352243" id="chtl-script" type="text/javascript"
-        src="https://chatling.ai/js/embed.js"></script>
+    <!-- Widget de Chat Chatling.ai (configurado para fullscreen) -->
+    <script> window.chtlConfig = { chatbotId: "4484352243" , display: "fullscreen" } </script>
+    <script async data-id="4484352243" id="chtl-script" data-display="fullscreen" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
 </body>
 
 </html>
