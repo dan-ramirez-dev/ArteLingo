@@ -610,10 +610,8 @@
             }
 
             // Mostrar/ocultar el widget solo en la pestaña 'assistant'
-            if (tabId === 'assistant') {
-                showChat();
-            } else {
-                // Aseguramos que el widget no esté visible en otras pestañas
+            // Ocultar el widget en todas las pestañas excepto 'assistant' (no lo cargamos automáticamente)
+            if (tabId !== 'assistant') {
                 hideChat();
             }
         } function updateProfileUI() {
@@ -682,6 +680,32 @@
             hideChat();
             const status = document.getElementById('assistant-status');
             if (status) status.textContent = 'Widget oculto.';
+        }
+
+        // Cargar el script del widget solo cuando el usuario lo solicite
+        function loadAssistantWidget() {
+            return new Promise((resolve, reject) => {
+                if (window._chtlLoaded) return resolve();
+                // Configuración previa
+                window.chtlConfig = { chatbotId: "4484352243", display: "fullscreen" };
+                const script = document.createElement('script');
+                script.async = true;
+                script.id = 'chtl-script';
+                script.type = 'text/javascript';
+                script.setAttribute('data-id', '4484352243');
+                script.setAttribute('data-display', 'fullscreen');
+                script.src = 'https://chatling.ai/js/embed.js';
+                script.onload = () => {
+                    window._chtlLoaded = true;
+                    const status = document.getElementById('assistant-status');
+                    if (status) status.textContent = 'Asistente cargado.';
+                    resolve();
+                };
+                script.onerror = (err) => {
+                    reject(err);
+                };
+                document.body.appendChild(script);
+            });
         }
 
         function renderFriendsList() {
@@ -900,9 +924,16 @@
 
         // --- EVENTOS PESTAÑA ASISTENTE ---
         document.getElementById('open-assistant-button').addEventListener('click', () => {
-            // Aseguramos mostrar la pestaña antes de intentar abrir
+            // Mostrar la pestaña y cargar el widget bajo demanda
             showTab('assistant');
-            setTimeout(openAssistantLauncher, 300);
+            loadAssistantWidget().then(() => {
+                // intentar abrir el launcher cuando el script esté cargado
+                setTimeout(openAssistantLauncher, 300);
+            }).catch(() => {
+                // Si falla la carga, mostrar mensaje al usuario
+                const status = document.getElementById('assistant-status');
+                if (status) status.textContent = 'Error al cargar el asistente.';
+            });
         });
         document.getElementById('close-assistant-hide').addEventListener('click', () => {
             hideAssistantWidget();
@@ -910,9 +941,7 @@
 
     </script>
 
-    <!-- Widget de Chat Chatling.ai (configurado para fullscreen) -->
-    <script> window.chtlConfig = { chatbotId: "4484352243" , display: "fullscreen" } </script>
-    <script async data-id="4484352243" id="chtl-script" data-display="fullscreen" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+    <!-- Widget de Chat Chatling.ai será cargado bajo demanda por loadAssistantWidget() -->
 </body>
 
 </html>
