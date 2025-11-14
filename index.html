@@ -362,14 +362,6 @@
             if (tabId === 'profile') {
                 updateProfileUI();
             }
-
-            // Mostrar el chat solo si no estamos en la pestaña de asistente
-            // (la pestaña de asistente tiene su propio widget integrado)
-            if (tabId !== 'assistant') {
-                showChat();
-            } else {
-                hideChat();
-            }
         } function updateProfileUI() {
             profileName.textContent = userProfile.name;
             profileLevel.textContent = `Nivel ${userProfile.level}`;
@@ -513,7 +505,6 @@
             completionScreen.classList.add('hidden');
             mainContent.classList.add('hidden');
             lessonScreen.classList.remove('hidden');
-            hideChat(); // Ocultar el chat al iniciar lección
             loadQuestion();
         }
 
@@ -536,72 +527,38 @@
 
 
         // --- FUNCIONES DEL WIDGET DE CHAT ---
-        function findChatElements() {
-            return {
-                frame: document.querySelector('iframe[id^="chtl-iframe-"]'),
-                button: document.querySelector('button[id^="chtl-launcher-"]'),
-                container: document.querySelector('div[id^="chtl-launcher-container-"]')
-            };
-        }
+        // Estas funciones se mantienen por compatibilidad, pero ahora el widget
+        // es solo una iframe integrada en la pestaña de Asistente
 
         function hideChat() {
-            // Intentamos varias veces ya que el widget puede tardar en cargar
-            let attempts = 0;
-            const maxAttempts = 10;
-
-            function attemptHide() {
-                const elements = findChatElements();
-                if (elements.frame || elements.button || elements.container) {
-                    if (elements.frame) elements.frame.style.display = 'none';
-                    if (elements.button) elements.button.style.display = 'none';
-                    if (elements.container) elements.container.style.display = 'none';
-                    // También añadimos CSS para asegurar que se oculte
-                    const style = document.createElement('style');
-                    style.id = 'chat-hide-style';
-                    style.textContent = `
-                        iframe[id^="chtl-iframe-"],
-                        button[id^="chtl-launcher-"],
-                        div[id^="chtl-launcher-container-"] {
-                            display: none !important;
-                            opacity: 0 !important;
-                            visibility: hidden !important;
-                        }
-                    `;
-                    document.head.appendChild(style);
-                } else if (attempts < maxAttempts) {
-                    attempts++;
-                    setTimeout(attemptHide, 500); // Intentar de nuevo en 500ms
-                }
-            }
-
-            attemptHide();
+            // El chat está integrado solo en la pestaña de Asistente,
+            // así que no hay nada que ocultar cuando estamos en otras pestañas
         }
 
         function showChat() {
-            const elements = findChatElements();
-            if (elements.frame) elements.frame.style.display = '';
-            if (elements.button) elements.button.style.display = '';
-            if (elements.container) elements.container.style.display = '';
-            // Removemos el CSS que fuerza el ocultamiento
-            const style = document.getElementById('chat-hide-style');
-            if (style) style.remove();
+            // El chat está integrado solo en la pestaña de Asistente,
+            // así que se mostrará automáticamente cuando accedas a esa pestaña
         }
 
         // --- INICIALIZACIÓN ---
         showTab('lessons');
         renderFriendsList();
+        
+        // Cargar el widget de Chatling cuando la página esté lista
+        window.addEventListener('load', () => {
+            const assistantContainer = document.getElementById('assistant-container');
+            if (assistantContainer && !assistantContainer.querySelector('iframe')) {
+                const iframe = document.createElement('iframe');
+                iframe.src = 'https://chatling.ai/chatbot/4484352243?embedded=true';
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+                iframe.style.borderRadius = '8px';
+                assistantContainer.appendChild(iframe);
+            }
+        });
 
     </script>
-
-    <!-- Widget de Chat Chatling.ai -->
-    <script>
-        window.chtlConfig = { 
-            chatbotId: "4484352243",
-            containerSelector: "#assistant-container"
-        };
-    </script>
-    <script async data-id="4484352243" id="chtl-script" type="text/javascript"
-        src="https://chatling.ai/js/embed.js"></script>
 </body>
 
 </html>
