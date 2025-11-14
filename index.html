@@ -129,6 +129,234 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Sección de recursos movida a la pestaña 'Aprender' -->
+                </main>
+            </div>
+
+            <!-- Pestaña Aprender (mejorada) -->
+            <div id="learn-tab" class="hidden">
+                <header class="text-center mb-4">
+                    <h1 class="text-3xl font-bold text-slate-800">Aprender — Explora por tema</h1>
+                    <p class="text-slate-500 mt-1">Selecciona un tema y profundiza con explicaciones, ejemplos y
+                        ejercicios.</p>
+                </header>
+
+                <!-- Navegación interna de la pestaña Aprender -->
+                <nav class="flex gap-2 mb-4 justify-center">
+                    <button data-learn="history"
+                        class="learn-tab-btn px-3 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-slate-700">Historia</button>
+                    <button data-learn="music"
+                        class="learn-tab-btn px-3 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-slate-700">Música</button>
+                    <button data-learn="drawing"
+                        class="learn-tab-btn px-3 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-slate-700">Dibujo</button>
+                    <button data-learn="resources"
+                        class="learn-tab-btn px-3 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-slate-700">Recursos</button>
+                </nav>
+
+                <main>
+                    <div id="learn-history" class="learn-section bg-white p-6 rounded-2xl shadow-md">
+                        <h2 class="text-xl font-bold mb-2">Historia del Arte — Visión ampliada</h2>
+                        <p class="text-slate-600 mb-3">Cronología, estilos y pistas prácticas para reconocer y analizar
+                            obras.</p>
+
+                        <h3 class="font-semibold">Gótico</h3>
+                        <p class="text-slate-600">Siglos XII–XVe. Arquitectura verticalizada, vidrieras y énfasis en lo
+                            espiritual. Observa catedrales y manuscritos iluminados.</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Puntos clave: arcos apuntados, bóvedas de crucería, narración en imágenes.</li>
+                            <li>Ejercicio: identifica 2 elementos góticos en una imagen de catedral.</li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-4">Renacimiento</h3>
+                        <p class="text-slate-600">Siglos XV–XVI. Humanismo, anatomía, perspectiva lineal y búsqueda de
+                            equilibrio (Leonardo, Rafael, Miguel Ángel).</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Puntos clave: proporción, perspectiva y composición equilibrada.</li>
+                            <li>Ejercicio: encuentra el punto de fuga en un retrato o escena arquitectónica.</li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-4">Barroco</h3>
+                        <p class="text-slate-600">Siglos XVII–XVIII. Emoción, movimiento y claroscuro (Caravaggio,
+                            Velázquez, Rubens).</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Puntos clave: luz direccional, composición dinámica, teatralidad.</li>
+                            <li>Ejercicio: describe cómo la luz guía tu mirada en una obra barroca.</li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-4">Neoclasicismo y Romanticismo</h3>
+                        <p class="text-slate-600">Finales XVIII–XIX. Neoclasicismo recupera la claridad clásica;
+                            Romanticismo prioriza emoción y naturaleza (Géricault, Turner).</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Puntos clave: idealización vs. emoción intensa.</li>
+                            <li>Ejercicio: compara una escena neoclásica con una romántica: ¿qué emociones provocan?
+                            </li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-4">Impresionismo y Post-impresionismo</h3>
+                        <p class="text-slate-600">Finales del XIX. Interés en la luz y color, pincelada visible (Monet,
+                            Renoir, Van Gogh, Seurat).</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Puntos clave: color percibido, pincelada suelta, técnicas alternativas como puntillismo.
+                            </li>
+                            <li>Ejercicio: reproduce con 6 trazos la atmósfera de una postal (foco en color, no
+                                detalle).</li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-4">Vanguardias del siglo XX</h3>
+                        <p class="text-slate-600">Cubismo, Futurismo, Surrealismo y más: ruptura de la representación
+                            tradicional y experimentación formal (Picasso, Dalí, Duchamp).</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Puntos clave: fragmentación, automatismo, énfasis conceptual.</li>
+                            <li>Ejercicio: busca una obra cubista y describe 3 elementos que rompen la perspectiva
+                                tradicional.</li>
+                        </ul>
+                    </div>
+
+                    <div id="learn-music" class="learn-section hidden bg-white p-6 rounded-2xl shadow-md">
+                        <h2 class="text-xl font-bold mb-2">Música — Fundamentos y práctica</h2>
+                        <p class="text-slate-600 mb-3">Teoría, entrenamiento auditivo y ejercicios aplicables a
+                            instrumento o voz.</p>
+
+                        <h3 class="font-semibold">Intervalos y entrenamiento auditivo</h3>
+                        <p class="text-slate-600">Intervalo = distancia entre dos notas. Practica reconociendo: segunda,
+                            tercera, cuarta, quinta, octava.</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Ejercicio: tararea la tónica, luego sube la tercera; repite hasta distinguir
+                                mayor/menor.</li>
+                            <li>Consejo: usa aplicaciones de entrenamiento auditivo o ejemplos en <span
+                                    class="text-teal-600">MusicTheory.net</span>.</li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-3">Melodía y fraseo</h3>
+                        <p class="text-slate-600">La melodía es una secuencia de notas con sentido. Observa fraseos,
+                            repeticiones y motivos.</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Ejercicio: toma una canción simple y divide la melodía en 2 frases; canta la segunda
+                                frase replicando la entonación.</li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-3">Armonía y progresiones</h3>
+                        <p class="text-slate-600">Armonía: combinación de notas simultáneas. Aprende las funciones
+                            (tónica, subdominante, dominante).</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Ejercicio: en Do mayor, toca o identifica C (I), F (IV) y G (V). Observa cómo G 'pide'
+                                volver a C.</li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-3">Ritmo y métrica</h3>
+                        <p class="text-slate-600">El ritmo organiza el tiempo. Practica con palmas, subdivisiones y
+                            diferentes compases.</p>
+                        <ul class="list-disc pl-5 mt-2 text-slate-600">
+                            <li>Ejercicio: marca 4/4 y luego acentúa el segundo y cuarto tiempo; escucha la sensación.
+                            </li>
+                        </ul>
+
+                        <h3 class="font-semibold mt-3">Notación básica</h3>
+                        <p class="text-slate-600">Claves, notas y valores rítmicos. Aprende a leer una partitura simple.
+                        </p>
+                        <p class="text-sm text-slate-500 mt-3">Recursos: <a href="https://www.musictheory.net/"
+                                target="_blank" rel="noopener"
+                                class="text-teal-600 hover:underline">MusicTheory.net</a>, <a href="https://imslp.org/"
+                                target="_blank" rel="noopener" class="text-teal-600 hover:underline">IMSLP</a></p>
+                    </div>
+
+                    <div id="learn-drawing" class="learn-section hidden bg-white p-6 rounded-2xl shadow-md">
+                        <h2 class="text-xl font-bold mb-2">Dibujo — Observación y técnica</h2>
+                        <p class="text-slate-600 mb-3">De lo básico a conceptos intermedios: contorno, perspectiva,
+                            composición y sombreados.</p>
+
+                        <h3 class="font-semibold">Gesture & contorno</h3>
+                        <p class="text-slate-600">Ejercicio rápido: 1–2 minutos por pose. Captura la energía y la línea
+                            principal (gesto).</p>
+
+                        <h3 class="font-semibold mt-3">Proporciones y figura humana</h3>
+                        <p class="text-slate-600">Reglas simples: la cabeza como unidad de medida (adulto ≈ 7–8
+                            cabezas). Practica bloques y formas simples antes del detalle.</p>
+
+                        <h3 class="font-semibold mt-3">Perspectiva</h3>
+                        <p class="text-slate-600">Un punto de fuga (lineal) para escenas simples; dos puntos para
+                            objetos en ángulo. Ejercicio: dibuja una carretera que se aleja al horizonte con un punto de
+                            fuga.</p>
+
+                        <h3 class="font-semibold mt-3">Luz, sombra y texturas</h3>
+                        <p class="text-slate-600">Practica hachurado, cross-hatching y degradados para representar
+                            volumen. Observa la transición de luz a sombra.</p>
+
+                        <h3 class="font-semibold mt-3">Composición</h3>
+                        <p class="text-slate-600">Regla de tercios, líneas guía y puntos de interés. Ejercicio: compón
+                            una mini escena usando la regla de tercios.</p>
+
+                        <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="p-3 bg-slate-50 rounded-md">
+                                <strong class="block mb-2">Mini-práctica:</strong>
+                                <ol class="list-decimal pl-5 text-slate-600">
+                                    <li>60s: gesture drawing</li>
+                                    <li>3 min: contorno + proporciones</li>
+                                    <li>5 min: añadir luz y sombra</li>
+                                </ol>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-md">
+                                <svg width="140" height="80" viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg"
+                                    class="rounded-md">
+                                    <rect x="2" y="2" width="136" height="76" rx="8" fill="#fff" stroke="#e6eef6" />
+                                    <line x1="10" y1="70" x2="130" y2="30" stroke="#cbd5e1" stroke-width="2" />
+                                    <circle cx="40" cy="40" r="10" stroke="#94a3b8" stroke-width="2" fill="#f8fafc" />
+                                    <rect x="80" y="20" width="40" height="30" rx="4" stroke="#94a3b8" stroke-width="2"
+                                        fill="#f8fafc" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="learn-resources" class="learn-section hidden bg-white p-6 rounded-2xl shadow-md">
+                        <h2 class="text-xl font-bold mb-2">Recursos recomendados y lecturas</h2>
+                        <p class="text-slate-600 mb-3">Selección curada de sitios, libros y canales para profundizar por
+                            tema.</p>
+                        <div class="grid gap-3 md:grid-cols-2">
+                            <div>
+                                <h4 class="font-semibold">Historia</h4>
+                                <ul class="list-disc pl-5 text-slate-600 space-y-1">
+                                    <li><a class="text-teal-600 hover:underline"
+                                            href="https://www.khanacademy.org/humanities/art-history" target="_blank"
+                                            rel="noopener">Khan Academy — Historia del Arte</a></li>
+                                    <li><a class="text-teal-600 hover:underline" href="https://smarthistory.org/"
+                                            target="_blank" rel="noopener">Smarthistory</a></li>
+                                    <li><a class="text-teal-600 hover:underline" href="https://www.metmuseum.org/"
+                                            target="_blank" rel="noopener">The Met — Colecciones</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Música</h4>
+                                <ul class="list-disc pl-5 text-slate-600 space-y-1">
+                                    <li><a class="text-teal-600 hover:underline" href="https://www.musictheory.net/"
+                                            target="_blank" rel="noopener">MusicTheory.net</a></li>
+                                    <li><a class="text-teal-600 hover:underline" href="https://imslp.org/"
+                                            target="_blank" rel="noopener">IMSLP — Partituras</a></li>
+                                    <li><a class="text-teal-600 hover:underline" href="https://www.coursera.org/"
+                                            target="_blank" rel="noopener">Coursera — Cursos</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Dibujo y técnica</h4>
+                                <ul class="list-disc pl-5 text-slate-600 space-y-1">
+                                    <li><a class="text-teal-600 hover:underline" href="https://drawabox.com/"
+                                            target="_blank" rel="noopener">Drawabox — Ejercicios de dibujo</a></li>
+                                    <li><a class="text-teal-600 hover:underline" href="https://www.proko.com/"
+                                            target="_blank" rel="noopener">Proko — Lecciones de figura humana</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Canales y multimedia</h4>
+                                <ul class="list-disc pl-5 text-slate-600 space-y-1">
+                                    <li><a class="text-teal-600 hover:underline" href="https://www.youtube.com/"
+                                            target="_blank" rel="noopener">YouTube — Canales educativos</a></li>
+                                    <li><a class="text-teal-600 hover:underline"
+                                            href="https://artsandculture.google.com/" target="_blank"
+                                            rel="noopener">Google Arts & Culture</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </main>
             </div>
 
@@ -162,19 +390,6 @@
                         <ul id="friends-list" class="space-y-4">
                             <!-- Amigos se generan aquí -->
                         </ul>
-                    </div>
-                </main>
-            </div>
-
-            <!-- Pestaña de Asistente -->
-            <div id="assistant-tab" class="hidden">
-                <header class="text-center mb-8">
-                    <h1 class="text-3xl font-bold text-slate-800">Asistente 🤖</h1>
-                    <p class="text-slate-500 mt-2">¿Necesitas ayuda? Pregúntale al asistente</p>
-                </header>
-                <main>
-                    <div id="assistant-container" class="bg-white p-6 rounded-2xl shadow-md" style="height: 500px; display: flex; flex-direction: column;">
-                        <!-- El widget de Chatling se cargará aquí -->
                     </div>
                 </main>
             </div>
@@ -246,6 +461,18 @@
                 </svg>
                 <span class="text-xs font-medium">Lecciones</span>
             </button>
+            <button data-tab="learn"
+                class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors"
+                aria-label="Aprender">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor">
+                    <path d="M12 2v6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M5 7h14" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M4 22h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M7 11c2 2 5 2 7 0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="text-xs font-medium">Aprender</span>
+            </button>
             <button data-tab="profile"
                 class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -253,13 +480,6 @@
                         clip-rule="evenodd" />
                 </svg>
                 <span class="text-xs font-medium">Perfil</span>
-            </button>
-            <button data-tab="assistant"
-                class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                </svg>
-                <span class="text-xs font-medium">Asistente</span>
             </button>
         </div>
     </nav>
@@ -323,8 +543,8 @@
 
         const tabScreens = {
             lessons: document.getElementById('lessons-tab'),
-            profile: document.getElementById('profile-tab'),
-            assistant: document.getElementById('assistant-tab')
+            learn: document.getElementById('learn-tab'),
+            profile: document.getElementById('profile-tab')
         };
 
         const navButtons = document.querySelectorAll('.nav-button');
@@ -362,12 +582,38 @@
             if (tabId === 'profile') {
                 updateProfileUI();
             }
+
+            showChat(); // Mostrar el chat al volver a las pestañas principales
         } function updateProfileUI() {
             profileName.textContent = userProfile.name;
             profileLevel.textContent = `Nivel ${userProfile.level}`;
             const progressPercentage = (userProfile.xp / userProfile.xpToNextLevel) * 100;
             xpBar.style.width = `${progressPercentage}%`;
             xpText.textContent = `${userProfile.xp} / ${userProfile.xpToNextLevel} XP`;
+        }
+
+        // --- INICIALIZADOR Y LÓGICA PARA LA PESTAÑA 'APRENDER' ---
+        function initLearnTab() {
+            const buttons = document.querySelectorAll('.learn-tab-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.dataset.learn;
+                    showLearnSection(id);
+                    // marcar activo
+                    buttons.forEach(b => b.classList.remove('bg-teal-50', 'ring', 'ring-teal-200'));
+                    btn.classList.add('bg-teal-50', 'ring', 'ring-teal-200');
+                });
+            });
+            // Mostrar por defecto 'history'
+            const first = document.querySelector('.learn-tab-btn[data-learn="history"]');
+            if (first) { first.click(); }
+        }
+
+        function showLearnSection(sectionId) {
+            const sections = document.querySelectorAll('.learn-section');
+            sections.forEach(s => s.classList.add('hidden'));
+            const el = document.getElementById(`learn-${sectionId}`) || document.getElementById(`learn-${sectionId}`);
+            if (el) el.classList.remove('hidden');
         }
 
         function renderFriendsList() {
@@ -505,6 +751,7 @@
             completionScreen.classList.add('hidden');
             mainContent.classList.add('hidden');
             lessonScreen.classList.remove('hidden');
+            hideChat(); // Ocultar el chat al iniciar lección
             loadQuestion();
         }
 
@@ -527,38 +774,68 @@
 
 
         // --- FUNCIONES DEL WIDGET DE CHAT ---
-        // Estas funciones se mantienen por compatibilidad, pero ahora el widget
-        // es solo una iframe integrada en la pestaña de Asistente
+        function findChatElements() {
+            return {
+                frame: document.querySelector('iframe[id^="chtl-iframe-"]'),
+                button: document.querySelector('button[id^="chtl-launcher-"]'),
+                container: document.querySelector('div[id^="chtl-launcher-container-"]')
+            };
+        }
 
         function hideChat() {
-            // El chat está integrado solo en la pestaña de Asistente,
-            // así que no hay nada que ocultar cuando estamos en otras pestañas
+            // Intentamos varias veces ya que el widget puede tardar en cargar
+            let attempts = 0;
+            const maxAttempts = 10;
+
+            function attemptHide() {
+                const elements = findChatElements();
+                if (elements.frame || elements.button || elements.container) {
+                    if (elements.frame) elements.frame.style.display = 'none';
+                    if (elements.button) elements.button.style.display = 'none';
+                    if (elements.container) elements.container.style.display = 'none';
+                    // También añadimos CSS para asegurar que se oculte
+                    const style = document.createElement('style');
+                    style.id = 'chat-hide-style';
+                    style.textContent = `
+                        iframe[id^="chtl-iframe-"],
+                        button[id^="chtl-launcher-"],
+                        div[id^="chtl-launcher-container-"] {
+                            display: none !important;
+                            opacity: 0 !important;
+                            visibility: hidden !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    setTimeout(attemptHide, 500); // Intentar de nuevo en 500ms
+                }
+            }
+
+            attemptHide();
         }
 
         function showChat() {
-            // El chat está integrado solo en la pestaña de Asistente,
-            // así que se mostrará automáticamente cuando accedas a esa pestaña
+            const elements = findChatElements();
+            if (elements.frame) elements.frame.style.display = '';
+            if (elements.button) elements.button.style.display = '';
+            if (elements.container) elements.container.style.display = '';
+            // Removemos el CSS que fuerza el ocultamiento
+            const style = document.getElementById('chat-hide-style');
+            if (style) style.remove();
         }
 
         // --- INICIALIZACIÓN ---
+        initLearnTab();
         showTab('lessons');
         renderFriendsList();
-        
-        // Cargar el widget de Chatling cuando la página esté lista
-        window.addEventListener('load', () => {
-            const assistantContainer = document.getElementById('assistant-container');
-            if (assistantContainer && !assistantContainer.querySelector('iframe')) {
-                const iframe = document.createElement('iframe');
-                iframe.src = 'https://chatling.ai/chatbot/4484352243?embedded=true';
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.border = 'none';
-                iframe.style.borderRadius = '8px';
-                assistantContainer.appendChild(iframe);
-            }
-        });
 
     </script>
+
+    <!-- Widget de Chat Chatling.ai -->
+    <script> window.chtlConfig = { chatbotId: "4484352243" } </script>
+    <script async data-id="4484352243" id="chtl-script" type="text/javascript"
+        src="https://chatling.ai/js/embed.js"></script>
 </body>
 
 </html>
