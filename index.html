@@ -364,16 +364,16 @@
             <div id="assistant-tab" class="hidden">
                 <header class="text-center mb-6">
                     <h1 class="text-3xl font-bold text-slate-800">Asistente</h1>
-                    <p class="text-slate-500 mt-1">Usa el asistente para preguntar sobre lecciones, recursos o pedir ayuda.</p>
+                    <p class="text-slate-500 mt-1">Usa el asistente para preguntar sobre lecciones, recursos o pedir
+                        ayuda.</p>
                 </header>
                 <main class="space-y-6">
                     <div class="bg-white p-6 rounded-2xl shadow-md text-slate-700">
-                        <p class="mb-4">Pulsa el botón para abrir el asistente en pantalla completa. Si el widget tarda en cargar, espera unos segundos.</p>
-                        <div class="space-y-2">
-                            <button id="open-assistant-button" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-2xl">Abrir asistente</button>
-                            <button id="close-assistant-hide" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium py-2 px-4 rounded-2xl">Ocultar widget</button>
+                        <!-- Asistente: carga automática al entrar en la pestaña. Contenedor inline abajo. -->
+                        <!-- Contenedor inline para el bot; inicialmente vacío y oculto hasta carga -->
+                        <div id="chtl-inline-bot"
+                            style="width:100%;height:70vh;display:none;margin-top:12px;border-radius:12px;overflow:hidden;background:#f8fafc">
                         </div>
-                        <p id="assistant-status" class="text-sm text-slate-500 mt-3"></p>
                     </div>
                 </main>
             </div>
@@ -492,9 +492,12 @@
                 <span class="text-xs font-medium">Aprender</span>
             </button>
             <button data-tab="assistant"
-                class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors" aria-label="Asistente">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                class="nav-button flex-1 flex flex-col items-center p-3 text-slate-500 transition-colors"
+                aria-label="Asistente">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <span class="text-xs font-medium">Asistente</span>
             </button>
@@ -610,9 +613,19 @@
             }
 
             // Mostrar/ocultar el widget solo en la pestaña 'assistant'
-            // Ocultar el widget en todas las pestañas excepto 'assistant' (no lo cargamos automáticamente)
+            // Ocultar/eliminar el widget en todas las pestañas excepto 'assistant' (no lo cargamos automáticamente)
             if (tabId !== 'assistant') {
+                hideAssistantWidget();
                 hideChat();
+            } else {
+                // Cuando el usuario entra a la pestaña Asistente, cargamos y abrimos el widget bajo demanda
+                const status = document.getElementById('assistant-status');
+                if (status) status.textContent = 'Cargando asistente...';
+                loadAssistantWidget().then(() => {
+                    setTimeout(openAssistantLauncher, 300);
+                }).catch(() => {
+                    if (status) status.textContent = 'Error al cargar el asistente.';
+                });
             }
         } function updateProfileUI() {
             profileName.textContent = userProfile.name;
@@ -647,61 +660,98 @@
         }
 
         // Abrir el launcher del widget (si existe) o mostrar el chat
+        // Con el modo inline ya no necesitamos intentar clicar un "launcher" exterior.
+        // Esta función intentará enfocar el iframe del asistente si existe y actualizar el estado.
         function openAssistantLauncher() {
             const status = document.getElementById('assistant-status');
-            const tryOpen = () => {
-                const launcher = document.querySelector('button[id^="chtl-launcher-"]');
-                if (launcher) {
-                    launcher.click();
+            // Mostrar el contenedor inline si existe
+            const inline = document.getElementById('chtl-inline-bot');
+            if (inline) inline.style.display = '';
+            // Intentar enfocar el iframe generado por el proveedor
+            setTimeout(() => {
+                const frame = document.querySelector('iframe[id^="chtl-iframe-"]');
+                if (frame) {
+                    try { frame.focus(); } catch (e) { }
                     if (status) status.textContent = 'Asistente abierto.';
-                    return true;
+                } else {
+                    if (status) status.textContent = 'Asistente listo.';
                 }
-                return false;
-            };
-
-            // Intentar abrir inmediatamente
-            if (tryOpen()) return;
-
-            // Si no está disponible aún, mostrar el chat (quita la regla que lo oculta) y reintentar
-            showChat();
-            if (status) status.textContent = 'Cargando asistente...';
-            let attempts = 0;
-            const maxAttempts = 10;
-            const interval = setInterval(() => {
-                attempts++;
-                if (tryOpen() || attempts >= maxAttempts) {
-                    clearInterval(interval);
-                    if (attempts >= maxAttempts && status) status.textContent = 'No se pudo abrir el asistente automáticamente.';
-                }
-            }, 500);
+            }, 300);
         }
 
         function hideAssistantWidget() {
-            hideChat();
+            // Para modo inline removemos/ocultamos el contenedor y el script si es necesario
             const status = document.getElementById('assistant-status');
+            const inline = document.getElementById('chtl-inline-bot');
+            if (inline) {
+                inline.style.display = 'none';
+                // limpiar contenido generado
+                inline.innerHTML = '';
+            }
+            // Remover script para forzar recarga completa si se vuelve a abrir
+            const script = document.getElementById('chtl-script');
+            if (script) script.remove();
+            // también intentamos quitar iframe/launcher si el proveedor los añadió con otro id
+            const frame = document.querySelector('iframe[id^="chtl-iframe-"]');
+            if (frame) frame.remove();
+            const btn = document.querySelector('button[id^="chtl-launcher-"]');
+            if (btn) btn.remove();
+            window._chtlLoaded = false;
+            window.chtlConfig = undefined;
             if (status) status.textContent = 'Widget oculto.';
         }
 
         // Cargar el script del widget solo cuando el usuario lo solicite
         function loadAssistantWidget() {
+            // Carga el widget en modo inline (page_inline) dentro del div #chtl-inline-bot
             return new Promise((resolve, reject) => {
                 if (window._chtlLoaded) return resolve();
-                // Configuración previa
-                window.chtlConfig = { chatbotId: "4484352243", display: "fullscreen" };
+                // Configuración previa para modo inline
+                window.chtlConfig = { chatbotId: "4484352243", display: "page_inline" };
+
+                // Asegurar que el contenedor inline existe y esté visible
+                const inline = document.getElementById('chtl-inline-bot');
+                if (!inline) {
+                    // Crear contenedor si no existe (fallback)
+                    const container = document.createElement('div');
+                    container.id = 'chtl-inline-bot';
+                    container.style.width = '100%';
+                    container.style.height = '70vh';
+                    container.style.marginTop = '12px';
+                    container.style.borderRadius = '12px';
+                    container.style.overflow = 'hidden';
+                    container.style.background = '#f8fafc';
+                    const assistantTab = document.getElementById('assistant-tab');
+                    if (assistantTab) assistantTab.appendChild(container);
+                } else {
+                    inline.style.display = '';
+                }
+
                 const script = document.createElement('script');
                 script.async = true;
                 script.id = 'chtl-script';
                 script.type = 'text/javascript';
                 script.setAttribute('data-id', '4484352243');
-                script.setAttribute('data-display', 'fullscreen');
+                script.setAttribute('data-display', 'page_inline');
                 script.src = 'https://chatling.ai/js/embed.js';
                 script.onload = () => {
                     window._chtlLoaded = true;
                     const status = document.getElementById('assistant-status');
                     if (status) status.textContent = 'Asistente cargado.';
-                    resolve();
+                    // dar un pequeño tiempo al proveedor para renderizar dentro del div
+                    setTimeout(() => {
+                        // si existe iframe, mostrar estado y resolver
+                        const frame = document.querySelector('iframe[id^="chtl-iframe-"]');
+                        if (frame) {
+                            frame.style.width = '100%';
+                            frame.style.height = '100%';
+                        }
+                        resolve();
+                    }, 300);
                 };
                 script.onerror = (err) => {
+                    const status = document.getElementById('assistant-status');
+                    if (status) status.textContent = 'Error cargando el asistente.';
                     reject(err);
                 };
                 document.body.appendChild(script);
@@ -923,21 +973,7 @@
         renderFriendsList();
 
         // --- EVENTOS PESTAÑA ASISTENTE ---
-        document.getElementById('open-assistant-button').addEventListener('click', () => {
-            // Mostrar la pestaña y cargar el widget bajo demanda
-            showTab('assistant');
-            loadAssistantWidget().then(() => {
-                // intentar abrir el launcher cuando el script esté cargado
-                setTimeout(openAssistantLauncher, 300);
-            }).catch(() => {
-                // Si falla la carga, mostrar mensaje al usuario
-                const status = document.getElementById('assistant-status');
-                if (status) status.textContent = 'Error al cargar el asistente.';
-            });
-        });
-        document.getElementById('close-assistant-hide').addEventListener('click', () => {
-            hideAssistantWidget();
-        });
+        // El asistente se carga automáticamente al entrar a la pestaña (showTab('assistant')).
 
     </script>
 
